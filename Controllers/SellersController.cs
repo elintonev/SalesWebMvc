@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SalesWebMvc.Models;
+using SalesWebMvc.Models.ViewModels;
 using SalesWebMvc.Services;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,12 @@ namespace SalesWebMvc.Controllers
     public class SellersController : Controller //Recebeu a chamada do caminho /Sellers que apresenta no navegador
     {
         private readonly SellerService _sellerService;
+        private readonly DepartmentService _departmentService;
 
-        public SellersController(SellerService sellerService)
+        public SellersController(SellerService sellerService, DepartmentService departmentService)
         {
             _sellerService = sellerService;
+            _departmentService = departmentService;
         }
 
         public IActionResult Index()  //Como não tinba nenhuma ação configurada, a ação Index foi acionada.
@@ -24,7 +27,9 @@ namespace SalesWebMvc.Controllers
             return View(list);
         }
         public IActionResult Create() {
-            return View();
+            var departments = _departmentService.FindAll();
+            var viewModels = new SellerFormViewModel { Departments = departments};
+            return View(viewModels);
         }
         [HttpPost] //Notação para definir que o método abaixo seja lido como um HTTPPOST
         [ValidateAntiForgeryToken] //Notação para definit que os dados pessoais do formulário não possam ser usados por token maliciosos
