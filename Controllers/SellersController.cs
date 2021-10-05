@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SalesWebMvc.Models;
 using SalesWebMvc.Services;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,14 @@ namespace SalesWebMvc.Controllers
             var list = _sellerService.FindAll();
             return View(list);
         }
-
+        public IActionResult Create() {
+            return View();
+        }
+        [HttpPost] //Notação para definir que o método abaixo seja lido como um HTTPPOST
+        [ValidateAntiForgeryToken] //Notação para definit que os dados pessoais do formulário não possam ser usados por token maliciosos
+        public IActionResult Create(Seller seller) {
+            _sellerService.Insert(seller);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
