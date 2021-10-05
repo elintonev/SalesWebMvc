@@ -19,6 +19,7 @@ namespace SalesWebMvc.Services
             return _context.Seller.ToList();
         }
         public void Insert(Seller obj) {
+            obj.Department = _context.Department.First();
             _context.Add(obj); //Metodo que pega minha variável do tipo Seller e insere no banco de dados
             _context.SaveChanges(); // Método que confirma a ação de inserir informações no banco de dados
         }
