@@ -36,6 +36,12 @@ namespace SalesWebMvc.Controllers
         [HttpPost] //Notação para definir que o método abaixo seja lido como um HTTPPOST
         [ValidateAntiForgeryToken] //Notação para definit que os dados pessoais do formulário não possam ser usados por token maliciosos
         public IActionResult Create(Seller seller) {
+            if (!ModelState.IsValid)
+            {
+                var departments = _departmentService.FindAll();
+                var viewModel = new SellerFormViewModel { Seller = seller, Departments = departments };
+                return View(viewModel);
+            }
             _sellerService.Insert(seller);
             return RedirectToAction(nameof(Index));
         }
