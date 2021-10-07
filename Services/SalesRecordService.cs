@@ -17,7 +17,6 @@ namespace SalesWebMvc.Services
             _context = context;
         }
         public async Task<List<SalesRecord>> FindByDateAsync(DateTime? minDate, DateTime? maxDate) {
-
             var result = from obj in _context.SalesRecord select obj;
             if (minDate.HasValue) {
                 result = result.Where(x => x.Date >= minDate);
@@ -29,6 +28,23 @@ namespace SalesWebMvc.Services
             return await result.Include(x => x.Seller) //Mesma coisa que o JOIN do SQL, sendo assim estamos dando um JOIN na tabela Seller
                 .Include(x => x.Seller.Department) //E um JOIN na tabela Seller, trazendo os departamentos
                 .OrderByDescending(x => x.Date) //Ordenando por data de forma decrescente
+                .ToListAsync(); //Retorna o resultado em fornma de LISTA e executa a função no banco de dados
+        }
+        public async Task<List<IGrouping<Department,SalesRecord>>> FindByDateGroupingAsync(DateTime? minDate, DateTime? maxDate)
+        {
+            var result = from obj in _context.SalesRecord select obj;
+            if (minDate.HasValue)
+            {
+                result = result.Where(x => x.Date >= minDate);
+            }
+            if (maxDate.HasValue)
+            {
+                result = result.Where(x => x.Date <= maxDate);
+            }
+            return await result.Include(x => x.Seller) //Mesma coisa que o JOIN do SQL, sendo assim estamos dando um JOIN na tabela Seller
+                .Include(x => x.Seller.Department) //E um JOIN na tabela Seller, trazendo os departamentos
+                .OrderByDescending(x => x.Date) //Ordenando por data de forma decrescente
+                .GroupBy(x => x.Seller.Department) //AGRUPAR POR DEPARTAMENTO, RETORNA UM RESULTADO IGROUPING<DEPARTMENT,SALESRECORD>
                 .ToListAsync(); //Retorna o resultado em fornma de LISTA e executa a função no banco de dados
         }
     }
