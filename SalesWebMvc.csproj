@@ -5,6 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20211105021048_NovoBanco.cs" />
+    <Compile Remove="Migrations\20211105021048_NovoBanco.Designer.cs" />
+    <Compile Remove="Migrations\20211105023346_AgoraVai.cs" />
+    <Compile Remove="Migrations\20211105023346_AgoraVai.Designer.cs" />
+    <Compile Remove="Migrations\20211105025602_CriarBanco.cs" />
+    <Compile Remove="Migrations\20211105025602_CriarBanco.Designer.cs" />
+    <Compile Remove="Migrations\20211105030357_CriarBanco.cs" />
+    <Compile Remove="Migrations\20211105030357_CriarBanco.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="2.1.7" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.3" />
@@ -19,7 +30,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.1" />
   </ItemGroup>
 
 </Project>

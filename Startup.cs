@@ -40,8 +40,8 @@ namespace SalesWebMvc
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddDbContext<SalesWebMvcContext>(options =>
-                    options.UseMySql(Configuration.GetConnectionString("SalesWebMvcContext"), builder =>
-                    builder.MigrationsAssembly("SalesWebMvc")));
+                    options.UseSqlServer(Configuration.GetConnectionString("SalesWebMvcContext"))); /*, builder =>
+                    builder.MigrationsAssembly("SalesWebMvc"))*/
 
             services.AddScoped<SeedingService>(); //Registrar o serviço no sistema de injeção de dependências da Aplicação;
             services.AddScoped<SellerService>();
@@ -63,7 +63,7 @@ namespace SalesWebMvc
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                seedingService.Seed();
+                //seedingService.Seed();
             }
             else
             {
